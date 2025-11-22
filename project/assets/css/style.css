@@ -10,7 +10,7 @@ body {
     background-color: #f8f9fa;
 }
 
-/* Navbar Customization */
+/* Navbar */
 .custom-navbar {
     background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
     box-shadow: 0 2px 15px rgba(0,0,0,0.1);
@@ -50,7 +50,7 @@ body {
     color: var(--accent-color) !important;
 }
 
-/* Footer Customization */
+/* Footer */
 .custom-footer {
     background-color: var(--primary-color);
     color: #ecf0f1;
@@ -68,7 +68,7 @@ body {
     text-decoration: none;
 }
 
-/* Tables & Cards */
+/* Tables/Cards */
 .table {
     border-radius: 8px;
     overflow: hidden;

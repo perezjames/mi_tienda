@@ -4,7 +4,7 @@ require_once '../inc/auth.php';
 require_once '../inc/helpers.php';
 check_login();
 
-// Stats
+// Estadísticas 
 $stmt = $pdo->query("SELECT COUNT(*) FROM productos");
 $total_productos = $stmt->fetchColumn();
 
@@ -78,7 +78,7 @@ include '../inc/header.php';
 <div class="row">
     <div class="col-md-12">
         <div class="card">
-            <div class="card-header">Últimos movimientos (Historial)</div>
+            <div class="card-header">Últimos movimientos</div>
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-hover align-middle">

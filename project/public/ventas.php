@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         try {
             $pdo->beginTransaction();
 
-            // Calculate total and validate stock
+            // calcular total y validar stock
             foreach ($items as $item) {
                 $stmt = $pdo->prepare("SELECT precio, stock FROM productos WHERE id = ?");
                 $stmt->execute([$item['id']]);
@@ -25,12 +25,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $total += $prod['precio'] * $item['qty'];
             }
 
-            // Create Sale
+            // crear venta
             $stmt = $pdo->prepare("INSERT INTO ventas (cliente_id, usuario_id, total) VALUES (?, ?, ?)");
             $stmt->execute([$cliente_id, $_SESSION['user_id'], $total]);
             $venta_id = $pdo->lastInsertId();
 
-            // Create Sale Items and Update Stock
+            // crear items de venta y actualizar stock
             foreach ($items as $item) {
                 $stmt = $pdo->prepare("SELECT precio FROM productos WHERE id = ?");
                 $stmt->execute([$item['id']]);
@@ -61,13 +61,13 @@ $ventas = $pdo->query("SELECT v.*, c.nombre as cliente, u.nombre as usuario FROM
 include '../inc/header.php';
 ?>
 
-<h2 class="mb-3">Nueva Venta</h2>
+<h2 class="mb-3">Nueva venta</h2>
 
 <?php if(isset($error)): ?>
     <div class="alert alert-danger"><?php echo $error; ?></div>
 <?php endif; ?>
 <?php if(isset($_GET['success'])): ?>
-    <div class="alert alert-success">Venta registrada correctamente.</div>
+    <div class="alert alert-success">Venta registrada correctamente</div>
 <?php endif; ?>
 
 <form method="POST" id="ventaForm">
@@ -75,7 +75,7 @@ include '../inc/header.php';
         <div class="col-md-4">
             <label class="form-label">Cliente</label>
             <select class="form-select" name="cliente_id" required>
-                <option value="">Seleccione Cliente...</option>
+                <option value="">Seleccione cliente...</option>
                 <?php foreach ($clientes as $c): ?>
                 <option value="<?php echo $c['id']; ?>"><?php echo htmlspecialchars($c['nombre']); ?></option>
                 <?php endforeach; ?>
@@ -84,7 +84,7 @@ include '../inc/header.php';
     </div>
 
     <div class="card mb-3">
-        <div class="card-header">Agregar Productos</div>
+        <div class="card-header">Agregar productos</div>
         <div class="card-body">
             <div class="row align-items-end">
                 <div class="col-md-6">
@@ -120,7 +120,7 @@ include '../inc/header.php';
             </tr>
         </thead>
         <tbody>
-            <!-- Items go here -->
+        
         </tbody>
         <tfoot>
             <tr>
@@ -132,12 +132,12 @@ include '../inc/header.php';
     </table>
 
     <input type="hidden" name="items" id="itemsInput">
-    <button type="submit" class="btn btn-dark btn-lg">Registrar Venta</button>
+    <button type="submit" class="btn btn-dark btn-lg">Registrar venta</button>
 </form>
 
 <hr class="my-5">
 
-<h3 class="mb-3">Últimas Ventas</h3>
+<h3 class="mb-3">Últimas ventas</h3>
 <div class="table-responsive">
     <table class="table table-hover align-middle">
         <thead class="table-dark">
@@ -184,7 +184,7 @@ function addItem() {
     const name = option.getAttribute('data-name');
     const price = parseFloat(option.getAttribute('data-price'));
 
-    // Check if exists
+    // verificar stock disponible
     const existing = items.find(i => i.id === id);
     if (existing) {
         existing.qty += qty;

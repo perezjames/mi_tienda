@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($loginResult === true) {
         redirect('dashboard.php');
     } elseif ($loginResult === 'role_mismatch') {
-        $error = 'El usuario no tiene el rol seleccionado.';
+        $error = 'Credenciales incorrectas para el rol seleccionado';
     } else {
         $error = 'Credenciales incorrectas';
     }
@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Login - Inventario</title>
+    <title>Iniciar sesión</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body { display: flex; align-items: center; justify-content: center; height: 100vh; background-color: #f5f5f5; }

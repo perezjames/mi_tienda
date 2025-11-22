@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 if (isset($_GET['delete'])) {
     $id = $_GET['delete'];
-    if ($id != $_SESSION['user_id']) { // Prevent self-delete
+    if ($id != $_SESSION['user_id']) {
         $stmt = $pdo->prepare("DELETE FROM users WHERE id = ?");
         $stmt->execute([$id]);
         registrar_historial($pdo, $_SESSION['user_id'], 'Eliminar Usuario', 'users', $id, '');
@@ -50,7 +50,7 @@ include '../inc/header.php';
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h1 class="h2">Usuarios</h1>
     <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#usuarioModal" onclick="resetForm()">
-        Nuevo Usuario
+        Nuevo usuario
     </button>
 </div>
 

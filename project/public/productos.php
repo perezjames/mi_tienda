@@ -4,7 +4,7 @@ require_once '../inc/auth.php';
 require_once '../inc/helpers.php';
 check_login();
 
-// Handle Form Submission
+// Gestión envío de formulario
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'];
     $nombre = sanitize($_POST['nombre']);
@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif ($action === 'edit') {
         $id = $_POST['id'];
         
-        // Get old data for history
+        // obtener datos antiguos para el historial
         $stmt = $pdo->prepare("SELECT * FROM productos WHERE id = ?");
         $stmt->execute([$id]);
         $old = $stmt->fetch();
@@ -38,14 +38,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->execute([$nombre, $codigo, $precio, $stock, $categoria_id, $id]);
         registrar_historial($pdo, $_SESSION['user_id'], 'Editar Producto', 'productos', $id, $detalles);
     } elseif ($action === 'delete') {
-        // Handled via GET usually, but let's support POST delete for security if needed, 
-        // but for simplicity I'll use GET for delete link in table with modal confirmation that submits a form or links to a delete script.
-        // Actually, the modal script sets href on a link. Let's handle GET delete below.
+        // A continuación, gestión eliminación
     }
     redirect('productos.php');
 }
 
-// Handle Delete via GET
+// Gestión eliminación
 if (isset($_GET['delete'])) {
     $id = $_GET['delete'];
     $stmt = $pdo->prepare("DELETE FROM productos WHERE id = ?");
@@ -54,7 +52,7 @@ if (isset($_GET['delete'])) {
     redirect('productos.php');
 }
 
-// Fetch Data
+// obtener lista de productos
 $productos = $pdo->query("SELECT p.*, c.nombre as categoria FROM productos p LEFT JOIN categorias c ON p.categoria_id = c.id ORDER BY p.id DESC")->fetchAll();
 $categorias = $pdo->query("SELECT * FROM categorias")->fetchAll();
 
@@ -64,7 +62,7 @@ include '../inc/header.php';
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h1 class="h2">Productos</h1>
     <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#productoModal" onclick="resetForm()">
-        Nuevo Producto
+        Nuevo producto
     </button>
 </div>
 

@@ -34,7 +34,7 @@ if (isset($_GET['export']) && $_GET['export'] == 'csv') {
 include '../inc/header.php';
 ?>
 
-<h2 class="mb-4 no-print">Reportes de Ventas</h2>
+<h2 class="mb-4 no-print">Reporte de ventas</h2>
 
 <form class="row g-3 mb-4 no-print">
     <div class="col-auto">

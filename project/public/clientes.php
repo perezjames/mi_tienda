@@ -13,12 +13,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($action === 'create') {
         $stmt = $pdo->prepare("INSERT INTO clientes (nombre, contacto, telefono) VALUES (?, ?, ?)");
         $stmt->execute([$nombre, $contacto, $telefono]);
-        registrar_historial($pdo, $_SESSION['user_id'], 'Crear Cliente', 'clientes', $pdo->lastInsertId(), "Nombre: $nombre");
+        registrar_historial($pdo, $_SESSION['user_id'], 'Crear cliente', 'clientes', $pdo->lastInsertId(), "Nombre: $nombre");
     } elseif ($action === 'edit') {
         $id = $_POST['id'];
         $stmt = $pdo->prepare("UPDATE clientes SET nombre=?, contacto=?, telefono=? WHERE id=?");
         $stmt->execute([$nombre, $contacto, $telefono, $id]);
-        registrar_historial($pdo, $_SESSION['user_id'], 'Editar Cliente', 'clientes', $id, "Nombre: $nombre");
+        registrar_historial($pdo, $_SESSION['user_id'], 'Editar cliente', 'clientes', $id, "Nombre: $nombre");
     }
     redirect('clientes.php');
 }
@@ -27,7 +27,7 @@ if (isset($_GET['delete'])) {
     $id = $_GET['delete'];
     $stmt = $pdo->prepare("DELETE FROM clientes WHERE id = ?");
     $stmt->execute([$id]);
-    registrar_historial($pdo, $_SESSION['user_id'], 'Eliminar Cliente', 'clientes', $id, '');
+    registrar_historial($pdo, $_SESSION['user_id'], 'Eliminar cliente', 'clientes', $id, '');
     redirect('clientes.php');
 }
 
@@ -94,7 +94,7 @@ include '../inc/header.php';
   <div class="modal-dialog">
     <form method="POST" class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="modalTitle">Nuevo Cliente</h5>
+        <h5 class="modal-title" id="modalTitle">Nuevo cliente</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -133,7 +133,7 @@ function resetForm() {
 }
 
 function editCliente(btn) {
-    document.getElementById('modalTitle').innerText = 'Editar Cliente';
+    document.getElementById('modalTitle').innerText = 'Editar cliente';
     document.getElementById('action').value = 'edit';
     document.getElementById('id').value = btn.getAttribute('data-id');
     document.getElementById('nombre').value = btn.getAttribute('data-nombre');
