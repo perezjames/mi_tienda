@@ -1,0 +1,119 @@
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #34495e;
+    --accent-color: #3498db;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding-top: 80px; /* Height of navbar */
+    background-color: #f8f9fa;
+}
+
+/* Navbar Customization */
+.custom-navbar {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+    padding: 0.8rem 1rem;
+}
+
+.custom-navbar .navbar-brand {
+    font-weight: 700;
+    letter-spacing: 1px;
+    font-size: 1.4rem;
+}
+
+.custom-navbar .nav-link {
+    position: relative;
+    padding: 0.5rem 1rem !important;
+    transition: color 0.3s ease;
+}
+
+.custom-navbar .nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 50%;
+    background-color: var(--accent-color);
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+.custom-navbar .nav-link:hover::after,
+.custom-navbar .nav-link.active::after {
+    width: 80%;
+}
+
+.custom-navbar .nav-link:hover {
+    color: var(--accent-color) !important;
+}
+
+/* Footer Customization */
+.custom-footer {
+    background-color: var(--primary-color);
+    color: #ecf0f1;
+    padding: 2rem 0;
+    margin-top: auto; /* Push to bottom */
+    border-top: 4px solid var(--accent-color);
+}
+
+.custom-footer a {
+    color: var(--accent-color);
+    transition: color 0.3s;
+}
+
+.custom-footer a:hover {
+    color: #fff;
+    text-decoration: none;
+}
+
+/* Tables & Cards */
+.table {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0,0,0,0.05);
+    background-color: white;
+}
+.table th {
+    background-color: var(--secondary-color);
+    color: #fff;
+    border: none;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+}
+.table td {
+    vertical-align: middle;
+}
+.btn-primary {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+}
+.btn-primary:hover {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+.card {
+    border: none;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    border-radius: 12px;
+    transition: transform 0.3s ease;
+}
+.card:hover {
+    transform: translateY(-5px);
+}
+.card-header {
+    background-color: white;
+    font-weight: bold;
+    border-bottom: 1px solid #f0f0f0;
+    border-radius: 12px 12px 0 0 !important;
+    padding: 1rem 1.25rem;
+}
+@media print {
+    .no-print {
+        display: none;
+    }
+}
