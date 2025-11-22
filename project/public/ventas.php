@@ -139,15 +139,15 @@ include '../inc/header.php';
 
 <h3 class="mb-3">Últimas Ventas</h3>
 <div class="table-responsive">
-    <table class="table table-striped table-hover table-sm">
-        <thead>
+    <table class="table table-hover align-middle">
+        <thead class="table-dark">
             <tr>
                 <th>ID</th>
                 <th>Fecha</th>
                 <th>Cliente</th>
                 <th>Vendedor</th>
                 <th>Total</th>
-                <th>Acciones</th>
+                <th class="text-end">Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -157,9 +157,11 @@ include '../inc/header.php';
                 <td><?php echo $v['fecha']; ?></td>
                 <td><?php echo htmlspecialchars($v['cliente'] ?? 'General'); ?></td>
                 <td><?php echo htmlspecialchars($v['usuario']); ?></td>
-                <td>$<?php echo number_format($v['total'], 2); ?></td>
-                <td>
-                    <a href="#" class="btn btn-sm btn-outline-secondary">Ver Detalles</a>
+                <td><span class="fw-bold text-success">$<?php echo number_format($v['total'], 2); ?></span></td>
+                <td class="text-end">
+                    <a href="#" class="btn btn-sm btn-outline-info" title="Ver Detalles">
+                        <i class="bi bi-eye"></i>
+                    </a>
                 </td>
             </tr>
             <?php endforeach; ?>

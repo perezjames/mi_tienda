@@ -1,61 +1,39 @@
-SISTEMA DE GESTIÓN DE INVENTARIO Y VENTAS
-===========================================
-
-Este es un sistema simple desarrollado en PHP y MySQL para ejecutarse en XAMPP.
+Sistema de gestión de inventario y ventas
+Proyecto básico desarrollado en PHP y MySQL para ejecutarse en XAMPP
 
 INSTALACIÓN
------------
+   1. Copiar la carpeta "project" en: C:\xampp\htdocs\mi_tienda
+   2. Activar Apache y MySQL en XAMPP.
+   3. Crear la base de datos desde phpMyAdmin importando el archivo: sql/schema.sql
+      Esto crea la base de datos "tienda" y todas las tablas.
+   4. Ajustar la conexión en inc/db.php si es necesario (por defecto: root sin contraseña).
 
-1. Copiar la carpeta 'project' a tu directorio 'htdocs' de XAMPP.
-   Ruta sugerida: C:\xampp\htdocs\mi_tienda
+ACCESO
+   Abrir en el navegador: http://localhost/project/mi_tienda/public/login.php
 
-2. Iniciar Apache y MySQL desde el panel de control de XAMPP.
+   Credenciales por defecto:
+      Rol         administrador  trabajador  proveedor   cliente
+      Email       administrador  trabajador  proveedor   cliente
+      Contraseña  123            123         133         123
 
-3. Crear la Base de Datos:
-   - Abrir phpMyAdmin (http://localhost/phpmyadmin).
-   - Ir a la pestaña "Importar".
-   - Seleccionar el archivo 'sql/schema.sql' que está dentro de la carpeta del proyecto.
-   - Ejecutar. Esto creará la base de datos 'tienda' y las tablas necesarias.
+FUNCIONALIDADES
+   Dashboard con resumen general
+   Gestión de productos con control de stock
+   Registro de ventas
+   Gestión de clientes y proveedores
+   Usuarios y roles (solo administrador)
+   Reportes filtrados y exportación
+   Historial de acciones
 
-4. Configuración de Base de Datos:
-   - El archivo de conexión está en 'inc/db.php'.
-   - Por defecto está configurado para XAMPP (usuario: root, sin contraseña).
-   - Si tienes otra configuración, edita este archivo.
-
-USO
----
-
-1. Abrir el navegador y entrar a:
-   http://localhost/project/mi_tienda/public/login.php
-
-2. Iniciar sesión con las credenciales de administrador:
-   Email: admin@local
-   Contraseña: admin123
-
-CARACTERÍSTICAS
----------------
-
-- Dashboard: Resumen de productos, ventas del día y últimos movimientos.
-- Ventas: Registrar nuevas ventas seleccionando cliente y productos. Control de stock automático.
-- Productos: CRUD completo (Crear, Leer, Actualizar, Eliminar) con control de stock.
-- Clientes/Proveedores: Gestión de contactos.
-- Usuarios: Gestión de usuarios y roles (Solo Admin).
-- Reportes: Filtrado de ventas por fecha, exportación a CSV e impresión.
-- Historial: Registro automático de todas las acciones importantes.
-
-NOTAS TÉCNICAS
---------------
-
-- Frontend: Bootstrap 5 (CDN).
-- Backend: PHP nativo con PDO.
-- Base de Datos: MySQL.
-- Seguridad: Hash de contraseñas, Prepared Statements, Sanitización básica.
+TECNOLOGÍAS
+   PHP con PDO
+   MySQL
+   Bootstrap 5
+   Seguridad básica (hash de contraseñas y prepared statements)
 
 ESTRUCTURA DE ARCHIVOS
-----------------------
-
-project/
-├─ public/       # Archivos accesibles vía web
-├─ inc/          # Archivos incluidos (lógica, conexión, templates)
-├─ assets/       # CSS y JS
-└─ sql/          # Script de base de datos
+   project/
+   public/
+   inc/
+   assets/
+   sql/

@@ -44,40 +44,44 @@ include '../inc/header.php';
 </div>
 
 <div class="table-responsive">
-    <table class="table table-striped table-sm">
-        <thead>
+    <table class="table table-hover align-middle">
+        <thead class="table-dark">
             <tr>
                 <th>ID</th>
                 <th>Nombre</th>
                 <th>Contacto</th>
                 <th>Teléfono</th>
-                <th>Acciones</th>
+                <th class="text-end">Acciones</th>
             </tr>
         </thead>
         <tbody>
             <?php foreach ($proveedores as $p): ?>
             <tr>
                 <td><?php echo $p['id']; ?></td>
-                <td><?php echo htmlspecialchars($p['nombre']); ?></td>
+                <td><span class="fw-bold"><?php echo htmlspecialchars($p['nombre']); ?></span></td>
                 <td><?php echo htmlspecialchars($p['contacto']); ?></td>
                 <td><?php echo htmlspecialchars($p['telefono']); ?></td>
-                <td>
-                    <button class="btn btn-sm btn-outline-secondary" 
-                            data-bs-toggle="modal" 
-                            data-bs-target="#proveedorModal"
-                            data-id="<?php echo $p['id']; ?>"
-                            data-nombre="<?php echo htmlspecialchars($p['nombre']); ?>"
-                            data-contacto="<?php echo htmlspecialchars($p['contacto']); ?>"
-                            data-telefono="<?php echo htmlspecialchars($p['telefono']); ?>"
-                            onclick="editProveedor(this)">
-                        Editar
-                    </button>
-                    <button class="btn btn-sm btn-outline-danger" 
-                            data-bs-toggle="modal" 
-                            data-bs-target="#deleteModal" 
-                            data-url="proveedores.php?delete=<?php echo $p['id']; ?>">
-                        Eliminar
-                    </button>
+                <td class="text-end">
+                    <div class="btn-group" role="group">
+                        <button class="btn btn-sm btn-outline-primary" 
+                                data-bs-toggle="modal" 
+                                data-bs-target="#proveedorModal"
+                                data-id="<?php echo $p['id']; ?>"
+                                data-nombre="<?php echo htmlspecialchars($p['nombre']); ?>"
+                                data-contacto="<?php echo htmlspecialchars($p['contacto']); ?>"
+                                data-telefono="<?php echo htmlspecialchars($p['telefono']); ?>"
+                                onclick="editProveedor(this)"
+                                title="Editar">
+                            <i class="bi bi-pencil-square"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-danger" 
+                                data-bs-toggle="modal" 
+                                data-bs-target="#deleteModal" 
+                                data-url="proveedores.php?delete=<?php echo $p['id']; ?>"
+                                title="Eliminar">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </div>
                 </td>
             </tr>
             <?php endforeach; ?>

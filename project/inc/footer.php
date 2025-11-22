@@ -1,14 +1,16 @@
-<footer class="custom-footer text-center">
+<footer class="mt-auto mb-4">
     <div class="container">
-        <div class="row align-items-center">
-            <div class="col-md-6 text-md-start">
-                <p class="mb-0 fw-bold">&copy; <?php echo date('Y'); ?> Mi Tienda.</p>
-                <small class="text-white-50">Sistema de Gestión de Inventario v1.0</small>
-            </div>
-            <div class="col-md-6 text-md-end mt-3 mt-md-0">
-                <a href="https://github.com/perezjames/mi_tienda" target="_blank" class="btn btn-outline-light btn-sm rounded-pill px-3">
-                    <i class="bi bi-github"></i> Ver en GitHub
-                </a>
+        <div class="custom-footer rounded-4 shadow px-4">
+            <div class="row align-items-center">
+                <div class="col-md-6 text-md-start">
+                    <p class="mb-0 fw-bold">&copy; <?php echo date('Y'); ?> Mi Tienda.</p>
+                    <small class="text-white-50">Sistema de Gestión de Inventario v1.0</small>
+                </div>
+                <div class="col-md-6 text-md-end mt-3 mt-md-0">
+                    <a href="https://github.com/perezjames/mi_tienda" target="_blank" class="btn btn-outline-light btn-sm rounded-pill px-3">
+                        <i class="bi bi-github"></i> Ver en GitHub
+                    </a>
+                </div>
             </div>
         </div>
     </div>

@@ -80,35 +80,37 @@ include '../inc/header.php';
         <div class="card">
             <div class="card-header">Últimos movimientos (Historial)</div>
             <div class="card-body">
-                <table class="table table-striped table-sm">
-                    <thead>
-                        <tr>
-                            <th>Fecha</th>
-                            <th>Usuario</th>
-                            <th>Acción</th>
-                            <th>Detalles</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        $sql = "SELECT h.*, u.nombre as usuario FROM historial h LEFT JOIN users u ON h.usuario_id = u.id";
-                        if ($_SESSION['role'] !== 'admin') {
-                            $sql .= " WHERE h.usuario_id = " . $_SESSION['user_id'];
-                        }
-                        $sql .= " ORDER BY h.fecha_hora DESC LIMIT 10";
-                        
-                        $stmt = $pdo->query($sql);
-                        while ($row = $stmt->fetch()):
-                        ?>
-                        <tr>
-                            <td><?php echo $row['fecha_hora']; ?></td>
-                            <td><?php echo htmlspecialchars($row['usuario'] ?? 'Sistema'); ?></td>
-                            <td><?php echo htmlspecialchars($row['accion']); ?></td>
-                            <td><?php echo htmlspecialchars($row['detalles']); ?></td>
-                        </tr>
-                        <?php endwhile; ?>
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Usuario</th>
+                                <th>Acción</th>
+                                <th>Detalles</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $sql = "SELECT h.*, u.nombre as usuario FROM historial h LEFT JOIN users u ON h.usuario_id = u.id";
+                            if ($_SESSION['role'] !== 'admin') {
+                                $sql .= " WHERE h.usuario_id = " . $_SESSION['user_id'];
+                            }
+                            $sql .= " ORDER BY h.fecha_hora DESC LIMIT 10";
+                            
+                            $stmt = $pdo->query($sql);
+                            while ($row = $stmt->fetch()):
+                            ?>
+                            <tr>
+                                <td><?php echo $row['fecha_hora']; ?></td>
+                                <td><span class="fw-bold"><?php echo htmlspecialchars($row['usuario'] ?? 'Sistema'); ?></span></td>
+                                <td><span class="badge bg-secondary"><?php echo htmlspecialchars($row['accion']); ?></span></td>
+                                <td class="text-muted small"><?php echo htmlspecialchars($row['detalles']); ?></td>
+                            </tr>
+                            <?php endwhile; ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

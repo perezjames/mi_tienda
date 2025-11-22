@@ -44,40 +44,44 @@ include '../inc/header.php';
 </div>
 
 <div class="table-responsive">
-    <table class="table table-striped table-sm">
-        <thead>
+    <table class="table table-hover align-middle">
+        <thead class="table-dark">
             <tr>
                 <th>ID</th>
                 <th>Nombre</th>
                 <th>Contacto</th>
                 <th>Teléfono</th>
-                <th>Acciones</th>
+                <th class="text-end">Acciones</th>
             </tr>
         </thead>
         <tbody>
             <?php foreach ($clientes as $c): ?>
             <tr>
                 <td><?php echo $c['id']; ?></td>
-                <td><?php echo htmlspecialchars($c['nombre']); ?></td>
+                <td><span class="fw-bold"><?php echo htmlspecialchars($c['nombre']); ?></span></td>
                 <td><?php echo htmlspecialchars($c['contacto']); ?></td>
                 <td><?php echo htmlspecialchars($c['telefono']); ?></td>
-                <td>
-                    <button class="btn btn-sm btn-outline-secondary" 
-                            data-bs-toggle="modal" 
-                            data-bs-target="#clienteModal"
-                            data-id="<?php echo $c['id']; ?>"
-                            data-nombre="<?php echo htmlspecialchars($c['nombre']); ?>"
-                            data-contacto="<?php echo htmlspecialchars($c['contacto']); ?>"
-                            data-telefono="<?php echo htmlspecialchars($c['telefono']); ?>"
-                            onclick="editCliente(this)">
-                        Editar
-                    </button>
-                    <button class="btn btn-sm btn-outline-danger" 
-                            data-bs-toggle="modal" 
-                            data-bs-target="#deleteModal" 
-                            data-url="clientes.php?delete=<?php echo $c['id']; ?>">
-                        Eliminar
-                    </button>
+                <td class="text-end">
+                    <div class="btn-group" role="group">
+                        <button class="btn btn-sm btn-outline-primary" 
+                                data-bs-toggle="modal" 
+                                data-bs-target="#clienteModal"
+                                data-id="<?php echo $c['id']; ?>"
+                                data-nombre="<?php echo htmlspecialchars($c['nombre']); ?>"
+                                data-contacto="<?php echo htmlspecialchars($c['contacto']); ?>"
+                                data-telefono="<?php echo htmlspecialchars($c['telefono']); ?>"
+                                onclick="editCliente(this)"
+                                title="Editar">
+                            <i class="bi bi-pencil-square"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-danger" 
+                                data-bs-toggle="modal" 
+                                data-bs-target="#deleteModal" 
+                                data-url="clientes.php?delete=<?php echo $c['id']; ?>"
+                                title="Eliminar">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </div>
                 </td>
             </tr>
             <?php endforeach; ?>

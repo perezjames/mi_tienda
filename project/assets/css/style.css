@@ -1,12 +1,12 @@
 :root {
-    --primary-color: #2c3e50;
-    --secondary-color: #34495e;
-    --accent-color: #3498db;
+    --primary-color: #000000;
+    --secondary-color: #212529;
+    --accent-color: #ffffff;
 }
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    padding-top: 80px; /* Height of navbar */
+    padding-top: 110px; /* Height of navbar + margin */
     background-color: #f8f9fa;
 }
 
@@ -54,8 +54,7 @@ body {
 .custom-footer {
     background-color: var(--primary-color);
     color: #ecf0f1;
-    padding: 2rem 0;
-    margin-top: auto; /* Push to bottom */
+    padding: 1.5rem 0;
     border-top: 4px solid var(--accent-color);
 }
 

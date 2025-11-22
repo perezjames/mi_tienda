@@ -69,8 +69,8 @@ include '../inc/header.php';
 </div>
 
 <div class="table-responsive">
-    <table class="table table-striped table-hover table-sm">
-        <thead>
+    <table class="table table-hover align-middle">
+        <thead class="table-dark">
             <tr>
                 <th>ID</th>
                 <th>Código</th>
@@ -78,37 +78,47 @@ include '../inc/header.php';
                 <th>Categoría</th>
                 <th>Precio</th>
                 <th>Stock</th>
-                <th>Acciones</th>
+                <th class="text-end">Acciones</th>
             </tr>
         </thead>
         <tbody>
             <?php foreach ($productos as $p): ?>
             <tr>
                 <td><?php echo $p['id']; ?></td>
-                <td><?php echo htmlspecialchars($p['codigo']); ?></td>
-                <td><?php echo htmlspecialchars($p['nombre']); ?></td>
+                <td><span class="badge bg-light text-dark border"><?php echo htmlspecialchars($p['codigo']); ?></span></td>
+                <td><span class="fw-bold"><?php echo htmlspecialchars($p['nombre']); ?></span></td>
                 <td><?php echo htmlspecialchars($p['categoria'] ?? 'Sin Cat'); ?></td>
                 <td>$<?php echo number_format($p['precio'], 2); ?></td>
-                <td><?php echo $p['stock']; ?></td>
                 <td>
-                    <button class="btn btn-sm btn-outline-secondary" 
-                            data-bs-toggle="modal" 
-                            data-bs-target="#productoModal"
-                            data-id="<?php echo $p['id']; ?>"
-                            data-nombre="<?php echo htmlspecialchars($p['nombre']); ?>"
-                            data-codigo="<?php echo htmlspecialchars($p['codigo']); ?>"
-                            data-precio="<?php echo $p['precio']; ?>"
-                            data-stock="<?php echo $p['stock']; ?>"
-                            data-categoria="<?php echo $p['categoria_id']; ?>"
-                            onclick="editProducto(this)">
-                        Editar
-                    </button>
-                    <button class="btn btn-sm btn-outline-danger" 
-                            data-bs-toggle="modal" 
-                            data-bs-target="#deleteModal" 
-                            data-url="productos.php?delete=<?php echo $p['id']; ?>">
-                        Eliminar
-                    </button>
+                    <?php if($p['stock'] < 10): ?>
+                        <span class="text-danger fw-bold"><?php echo $p['stock']; ?></span>
+                    <?php else: ?>
+                        <?php echo $p['stock']; ?>
+                    <?php endif; ?>
+                </td>
+                <td class="text-end">
+                    <div class="btn-group" role="group">
+                        <button class="btn btn-sm btn-outline-primary" 
+                                data-bs-toggle="modal" 
+                                data-bs-target="#productoModal"
+                                data-id="<?php echo $p['id']; ?>"
+                                data-nombre="<?php echo htmlspecialchars($p['nombre']); ?>"
+                                data-codigo="<?php echo htmlspecialchars($p['codigo']); ?>"
+                                data-precio="<?php echo $p['precio']; ?>"
+                                data-stock="<?php echo $p['stock']; ?>"
+                                data-categoria="<?php echo $p['categoria_id']; ?>"
+                                onclick="editProducto(this)"
+                                title="Editar">
+                            <i class="bi bi-pencil-square"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-danger" 
+                                data-bs-toggle="modal" 
+                                data-bs-target="#deleteModal" 
+                                data-url="productos.php?delete=<?php echo $p['id']; ?>"
+                                title="Eliminar">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </div>
                 </td>
             </tr>
             <?php endforeach; ?>

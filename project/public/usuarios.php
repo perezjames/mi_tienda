@@ -55,42 +55,48 @@ include '../inc/header.php';
 </div>
 
 <div class="table-responsive">
-    <table class="table table-striped table-sm">
-        <thead>
+    <table class="table table-hover align-middle">
+        <thead class="table-dark">
             <tr>
                 <th>ID</th>
                 <th>Nombre</th>
                 <th>Email</th>
                 <th>Rol</th>
-                <th>Acciones</th>
+                <th class="text-end">Acciones</th>
             </tr>
         </thead>
         <tbody>
             <?php foreach ($usuarios as $u): ?>
             <tr>
                 <td><?php echo $u['id']; ?></td>
-                <td><?php echo htmlspecialchars($u['nombre']); ?></td>
+                <td><span class="fw-bold"><?php echo htmlspecialchars($u['nombre']); ?></span></td>
                 <td><?php echo htmlspecialchars($u['email']); ?></td>
-                <td><?php echo ucfirst($u['role']); ?></td>
                 <td>
-                    <button class="btn btn-sm btn-outline-secondary" 
-                            data-bs-toggle="modal" 
-                            data-bs-target="#usuarioModal"
-                            data-id="<?php echo $u['id']; ?>"
-                            data-nombre="<?php echo htmlspecialchars($u['nombre']); ?>"
-                            data-email="<?php echo htmlspecialchars($u['email']); ?>"
-                            data-role="<?php echo $u['role']; ?>"
-                            onclick="editUsuario(this)">
-                        Editar
-                    </button>
-                    <?php if($u['id'] != $_SESSION['user_id']): ?>
-                    <button class="btn btn-sm btn-outline-danger" 
-                            data-bs-toggle="modal" 
-                            data-bs-target="#deleteModal" 
-                            data-url="usuarios.php?delete=<?php echo $u['id']; ?>">
-                        Eliminar
-                    </button>
-                    <?php endif; ?>
+                    <span class="badge bg-secondary"><?php echo ucfirst($u['role']); ?></span>
+                </td>
+                <td class="text-end">
+                    <div class="btn-group" role="group">
+                        <button class="btn btn-sm btn-outline-primary" 
+                                data-bs-toggle="modal" 
+                                data-bs-target="#usuarioModal"
+                                data-id="<?php echo $u['id']; ?>"
+                                data-nombre="<?php echo htmlspecialchars($u['nombre']); ?>"
+                                data-email="<?php echo htmlspecialchars($u['email']); ?>"
+                                data-role="<?php echo $u['role']; ?>"
+                                onclick="editUsuario(this)"
+                                title="Editar">
+                            <i class="bi bi-pencil-square"></i>
+                        </button>
+                        <?php if($u['id'] != $_SESSION['user_id']): ?>
+                        <button class="btn btn-sm btn-outline-danger" 
+                                data-bs-toggle="modal" 
+                                data-bs-target="#deleteModal" 
+                                data-url="usuarios.php?delete=<?php echo $u['id']; ?>"
+                                title="Eliminar">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                        <?php endif; ?>
+                    </div>
                 </td>
             </tr>
             <?php endforeach; ?>

@@ -66,8 +66,8 @@ include '../inc/header.php';
     </div>
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-bordered table-striped">
-                <thead>
+            <table class="table table-hover align-middle">
+                <thead class="table-dark">
                     <tr>
                         <th>ID Venta</th>
                         <th>Fecha</th>
@@ -91,7 +91,7 @@ include '../inc/header.php';
                     </tr>
                     <?php endforeach; ?>
                 </tbody>
-                <tfoot>
+                <tfoot class="table-light">
                     <tr>
                         <th colspan="4" class="text-end">Total Periodo</th>
                         <th>$<?php echo number_format($total_periodo, 2); ?></th>
