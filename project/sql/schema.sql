@@ -72,18 +72,3 @@ CREATE TABLE historial (
   fecha_hora TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (usuario_id) REFERENCES users(id) ON DELETE SET NULL
 );
-
--- Datos de ejemplo
--- Password: admin123
-INSERT INTO users (nombre,email,password,role) VALUES
-('Admin','admin@local', '$2y$10$hTG4.O6wyTGkwtTsHZvX5eAUiPyppONUd46/.GRuIwrZEekSOprhy','admin');
-
-INSERT INTO categorias (nombre) VALUES ('General'), ('Electrónica'), ('Ropa');
-
-INSERT INTO productos (nombre, categoria_id, codigo, precio, stock) VALUES 
-('Laptop Basic', 2, 'LAP001', 500.00, 10),
-('Camiseta Negra', 3, 'CAM001', 15.00, 50),
-('Mouse USB', 2, 'MOU001', 10.00, 100);
-
-INSERT INTO clientes (nombre, contacto, telefono) VALUES 
-('Cliente Mostrador', 'N/A', '000000000');
