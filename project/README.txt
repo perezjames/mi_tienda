@@ -33,7 +33,7 @@ TECNOLOGÍAS
 
 ESTRUCTURA DE ARCHIVOS
    project/
-   public/
-   inc/
-   assets/
-   sql/
+      public/     vista pública
+      inc/        lógica
+      assets/     recursos
+      sql/        esquema database
