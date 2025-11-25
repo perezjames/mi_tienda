@@ -8,24 +8,25 @@ function check_login() {
 }
 
 function check_role($allowed_roles) {
-    if (!in_array($_SESSION['role'], $allowed_roles)) {
+    if (!in_array($_SESSION['rol'], $allowed_roles)) {
         die("Acceso denegado. Rol requerido: " . implode(', ', $allowed_roles));
     }
 }
 
-function login($pdo, $email, $password, $role_selected) {
-    $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ?");
-    $stmt->execute([$email]);
+function login($pdo, $tipo_documento, $numero_documento, $fecha_nacimiento) {
+    $stmt = $pdo->prepare("SELECT * FROM users WHERE tipo_documento = ? AND numero_documento = ? AND estado = 'activo'");
+    $stmt->execute([$tipo_documento, $numero_documento]);
     $user = $stmt->fetch();
 
-    if ($user && password_verify($password, $user['password'])) {
-        if ($user['role'] !== $role_selected) {
-            return 'role_mismatch';
+    if ($user) {
+        // Verificar fecha de nacimiento
+        if ($user['fecha_nacimiento'] === $fecha_nacimiento) {
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['nombre'] = $user['nombre'];
+            $_SESSION['correo'] = $user['correo'];
+            $_SESSION['rol'] = $user['rol'];
+            return true;
         }
-        $_SESSION['user_id'] = $user['id'];
-        $_SESSION['nombre'] = $user['nombre'];
-        $_SESSION['role'] = $user['role'];
-        return true;
     }
     return false;
 }

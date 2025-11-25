@@ -3,10 +3,14 @@ USE tienda;
 
 CREATE TABLE users (
   id INT AUTO_INCREMENT PRIMARY KEY,
+  tipo_documento ENUM('DNI','CE','Pasaporte','RUC') NOT NULL DEFAULT 'DNI',
+  numero_documento VARCHAR(20) NOT NULL UNIQUE,
+  fecha_nacimiento DATE NOT NULL,
   nombre VARCHAR(100) NOT NULL,
-  email VARCHAR(150) NOT NULL UNIQUE,
+  correo VARCHAR(150) NOT NULL,
   password VARCHAR(255) NOT NULL,
-  role ENUM('administrador','trabajador','proveedor','cliente') DEFAULT 'trabajador',
+  rol ENUM('administrador','trabajador','proveedor','cliente') DEFAULT 'trabajador',
+  estado ENUM('activo','inactivo') DEFAULT 'activo',
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -46,6 +50,8 @@ CREATE TABLE ventas (
   id INT AUTO_INCREMENT PRIMARY KEY,
   cliente_id INT,
   usuario_id INT,
+  subtotal DECIMAL(12,2),
+  iva DECIMAL(12,2),
   total DECIMAL(12,2),
   fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (cliente_id) REFERENCES clientes(id) ON DELETE SET NULL,
