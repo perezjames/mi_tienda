@@ -122,7 +122,7 @@ include '../inc/header.php';
                 <i class="bi bi-cart-check me-1"></i>Ventas
             </a>
             <a href="?tipo=productos_vendidos" class="btn btn-<?php echo $tipo_reporte == 'productos_vendidos' ? 'dark' : 'outline-dark'; ?>">
-                <i class="bi bi-graph-up me-1"></i>Productos Vendidos
+                <i class="bi bi-graph-up me-1"></i>Productos vendidos
             </a>
             <a href="?tipo=productos" class="btn btn-<?php echo $tipo_reporte == 'productos' ? 'dark' : 'outline-dark'; ?>">
                 <i class="bi bi-box me-1"></i>Productos
