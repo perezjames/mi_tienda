@@ -92,10 +92,7 @@ include '../inc/header.php';
                         <div class="row g-2">
                             <div class="col-5">
                                 <select class="form-select" name="tipo_documento" required>
-                                    <option value="DNI" <?php echo $usuario['tipo_documento'] == 'DNI' ? 'selected' : ''; ?>>DNI</option>
-                                    <option value="CE" <?php echo $usuario['tipo_documento'] == 'CE' ? 'selected' : ''; ?>>CE</option>
-                                    <option value="Pasaporte" <?php echo $usuario['tipo_documento'] == 'Pasaporte' ? 'selected' : ''; ?>>Pasaporte</option>
-                                    <option value="RUC" <?php echo $usuario['tipo_documento'] == 'RUC' ? 'selected' : ''; ?>>RUC</option>
+                                    <option value="CC" <?php echo $usuario['tipo_documento'] == 'CC' ? 'selected' : ''; ?>>CC</option>
                                 </select>
                             </div>
                             <div class="col-7">

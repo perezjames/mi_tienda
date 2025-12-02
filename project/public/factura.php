@@ -6,9 +6,9 @@ check_login();
 $venta_id = $_GET['id'] ?? 0;
 
 // Obtener datos de la venta
-$stmt = $pdo->prepare("SELECT v.*, c.nombre as cliente, c.contacto, c.telefono, u.nombre as vendedor 
+$stmt = $pdo->prepare("SELECT v.*, c.nombre as contacto_nombre, c.contacto, c.telefono, u.nombre as vendedor 
                        FROM ventas v 
-                       LEFT JOIN clientes c ON v.cliente_id = c.id 
+                       LEFT JOIN contactos c ON v.contacto_id = c.id 
                        LEFT JOIN users u ON v.usuario_id = u.id 
                        WHERE v.id = ?");
 $stmt->execute([$venta_id]);
@@ -31,7 +31,7 @@ $items = $stmt->fetchAll();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Factura #<?php echo $venta_id; ?> - Mi Tienda</title>
+    <title>Factura #<?php echo $venta_id; ?></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <style>
@@ -54,7 +54,7 @@ $items = $stmt->fetchAll();
                 <div class="factura-header">
                     <div class="row">
                         <div class="col-6">
-                            <h1 class="mb-0"><i class="bi bi-box-seam-fill"></i> Mi Tienda</h1>
+                            <h1 class="mb-0">Mi Tienda</h1>
                             <p class="text-muted mb-0">Sistema de gestión</p>
                         </div>
                         <div class="col-6 text-end">
@@ -68,8 +68,8 @@ $items = $stmt->fetchAll();
                 <!-- Datos del cliente -->
                 <div class="row mb-4">
                     <div class="col-6">
-                        <h5 class="mb-3">Cliente:</h5>
-                        <p class="mb-1"><strong><?php echo htmlspecialchars($venta['cliente'] ?? 'Cliente General'); ?></strong></p>
+                        <h5 class="mb-3">Contacto:</h5>
+                        <p class="mb-1"><strong><?php echo htmlspecialchars($venta['contacto_nombre'] ?? 'Cliente General'); ?></strong></p>
                         <?php if($venta['contacto']): ?>
                         <p class="mb-1"><?php echo htmlspecialchars($venta['contacto']); ?></p>
                         <?php endif; ?>

@@ -30,31 +30,24 @@ CREATE TABLE productos (
   FOREIGN KEY (categoria_id) REFERENCES categorias(id) ON DELETE SET NULL
 );
 
-CREATE TABLE clientes (
+CREATE TABLE contactos (
   id INT AUTO_INCREMENT PRIMARY KEY,
   nombre VARCHAR(150) NOT NULL,
   contacto VARCHAR(150),
   telefono VARCHAR(50),
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE TABLE proveedores (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  nombre VARCHAR(150) NOT NULL,
-  contacto VARCHAR(150),
-  telefono VARCHAR(50),
+  tipo ENUM('cliente','proveedor') NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE ventas (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  cliente_id INT,
+  contacto_id INT,
   usuario_id INT,
   subtotal DECIMAL(12,2),
   iva DECIMAL(12,2),
   total DECIMAL(12,2),
   fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (cliente_id) REFERENCES clientes(id) ON DELETE SET NULL,
+  FOREIGN KEY (contacto_id) REFERENCES contactos(id) ON DELETE SET NULL,
   FOREIGN KEY (usuario_id) REFERENCES users(id) ON DELETE SET NULL
 );
 

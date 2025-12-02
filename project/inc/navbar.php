@@ -19,10 +19,7 @@
                     <a class="nav-link" href="productos.php">Productos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="clientes.php">Clientes</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="proveedores.php">Proveedores</a>
+                    <a class="nav-link" href="contactos.php">Contactos</a>
                 </li>
                 <?php endif; ?>
                 <?php if($_SESSION['rol'] == 'administrador'): ?>

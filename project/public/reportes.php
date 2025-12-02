@@ -16,10 +16,10 @@ $columnas = [];
 switch ($tipo_reporte) {
     case 'ventas':
         $titulo = 'Reporte de Ventas';
-        $columnas = ['ID', 'Fecha', 'Cliente', 'Vendedor', 'Subtotal', 'IVA', 'Total'];
-        $sql = "SELECT v.id, v.fecha, c.nombre as cliente, u.nombre as usuario, v.subtotal, v.iva, v.total 
+        $columnas = ['ID', 'Fecha', 'Contacto', 'Vendedor', 'Subtotal', 'IVA', 'Total'];
+        $sql = "SELECT v.id, v.fecha, c.nombre as contacto, u.nombre as usuario, v.subtotal, v.iva, v.total 
                 FROM ventas v 
-                LEFT JOIN clientes c ON v.cliente_id = c.id 
+                LEFT JOIN contactos c ON v.contacto_id = c.id 
                 LEFT JOIN users u ON v.usuario_id = u.id 
                 WHERE DATE(v.fecha) BETWEEN ? AND ? 
                 ORDER BY v.fecha DESC";
@@ -51,22 +51,15 @@ switch ($tipo_reporte) {
         }
         break;
 
-    case 'clientes':
-        $titulo = 'Reporte de Clientes';
-        $columnas = ['ID', 'Nombre', 'Contacto', 'Teléfono', 'Total Compras', 'Fecha Registro'];
-        $sql = "SELECT c.id, c.nombre, c.contacto, c.telefono, 
+    case 'contactos':
+        $titulo = 'Reporte de Contactos';
+        $columnas = ['ID', 'Nombre', 'Contacto', 'Teléfono', 'Tipo', 'Total Compras', 'Fecha Registro'];
+        $sql = "SELECT c.id, c.nombre, c.contacto, c.telefono, c.tipo,
                 COALESCE(SUM(v.total), 0) as total_compras, c.created_at 
-                FROM clientes c 
-                LEFT JOIN ventas v ON c.id = v.cliente_id 
+                FROM contactos c 
+                LEFT JOIN ventas v ON c.id = v.contacto_id AND c.tipo = 'cliente'
                 GROUP BY c.id 
                 ORDER BY total_compras DESC";
-        $datos = $pdo->query($sql)->fetchAll();
-        break;
-
-    case 'proveedores':
-        $titulo = 'Reporte de Proveedores';
-        $columnas = ['ID', 'Nombre', 'Contacto', 'Teléfono', 'Fecha Registro'];
-        $sql = "SELECT * FROM proveedores ORDER BY nombre";
         $datos = $pdo->query($sql)->fetchAll();
         break;
 
@@ -130,11 +123,8 @@ include '../inc/header.php';
             <a href="?tipo=inventario" class="btn btn-<?php echo $tipo_reporte == 'inventario' ? 'dark' : 'outline-dark'; ?>">
                 <i class="bi bi-boxes me-1"></i>Inventario
             </a>
-            <a href="?tipo=clientes" class="btn btn-<?php echo $tipo_reporte == 'clientes' ? 'dark' : 'outline-dark'; ?>">
-                <i class="bi bi-people me-1"></i>Clientes
-            </a>
-            <a href="?tipo=proveedores" class="btn btn-<?php echo $tipo_reporte == 'proveedores' ? 'dark' : 'outline-dark'; ?>">
-                <i class="bi bi-truck me-1"></i>Proveedores
+            <a href="?tipo=contactos" class="btn btn-<?php echo $tipo_reporte == 'contactos' ? 'dark' : 'outline-dark'; ?>">
+                <i class="bi bi-people me-1"></i>Contactos
             </a>
             <?php if($_SESSION['rol'] == 'administrador'): ?>
             <a href="?tipo=usuarios" class="btn btn-<?php echo $tipo_reporte == 'usuarios' ? 'dark' : 'outline-dark'; ?>">
@@ -237,8 +227,11 @@ include '../inc/header.php';
                                 $badge_class = $valor == 'activo' ? 'success' : ($valor == 'Bajo stock' ? 'danger' : 'secondary');
                                 echo '<td><span class="badge bg-' . $badge_class . '">' . ucfirst($valor) . '</span></td>';
                             }
-                            elseif($columnas[$i] == 'Rol') {
-                                echo '<td><span class="badge bg-secondary">' . ucfirst($valor) . '</span></td>';
+                            elseif($columnas[$i] == 'Rol' || $columnas[$i] == 'Tipo') {
+                                $badge_class = 'secondary';
+                                if ($valor === 'cliente') $badge_class = 'info';
+                                if ($valor === 'proveedor') $badge_class = 'warning';
+                                echo '<td><span class="badge bg-' . $badge_class . '">' . ucfirst($valor) . '</span></td>';
                             }
                             else {
                                 echo '<td>' . htmlspecialchars($valor) . '</td>';

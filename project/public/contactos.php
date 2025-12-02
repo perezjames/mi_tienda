@@ -9,37 +9,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nombre = sanitize($_POST['nombre']);
     $contacto = sanitize($_POST['contacto']);
     $telefono = sanitize($_POST['telefono']);
+    $tipo = sanitize($_POST['tipo']);
 
     if ($action === 'create') {
-        $stmt = $pdo->prepare("INSERT INTO clientes (nombre, contacto, telefono) VALUES (?, ?, ?)");
-        $stmt->execute([$nombre, $contacto, $telefono]);
-        registrar_historial($pdo, $_SESSION['user_id'], 'Crear cliente', 'clientes', $pdo->lastInsertId(), "Nombre: $nombre");
+        $stmt = $pdo->prepare("INSERT INTO contactos (nombre, contacto, telefono, tipo) VALUES (?, ?, ?, ?)");
+        $stmt->execute([$nombre, $contacto, $telefono, $tipo]);
+        registrar_historial($pdo, $_SESSION['user_id'], 'Crear contacto', 'contactos', $pdo->lastInsertId(), "Nombre: $nombre, Tipo: $tipo");
     } elseif ($action === 'edit') {
         $id = $_POST['id'];
-        $stmt = $pdo->prepare("UPDATE clientes SET nombre=?, contacto=?, telefono=? WHERE id=?");
-        $stmt->execute([$nombre, $contacto, $telefono, $id]);
-        registrar_historial($pdo, $_SESSION['user_id'], 'Editar cliente', 'clientes', $id, "Nombre: $nombre");
+        $stmt = $pdo->prepare("UPDATE contactos SET nombre=?, contacto=?, telefono=?, tipo=? WHERE id=?");
+        $stmt->execute([$nombre, $contacto, $telefono, $tipo, $id]);
+        registrar_historial($pdo, $_SESSION['user_id'], 'Editar contacto', 'contactos', $id, "Nombre: $nombre, Tipo: $tipo");
     }
-    redirect('clientes.php');
+    redirect('contactos.php');
 }
 
 if (isset($_GET['delete'])) {
     $id = $_GET['delete'];
-    $stmt = $pdo->prepare("DELETE FROM clientes WHERE id = ?");
+    $stmt = $pdo->prepare("DELETE FROM contactos WHERE id = ?");
     $stmt->execute([$id]);
-    registrar_historial($pdo, $_SESSION['user_id'], 'Eliminar cliente', 'clientes', $id, '');
-    redirect('clientes.php');
+    registrar_historial($pdo, $_SESSION['user_id'], 'Eliminar contacto', 'contactos', $id, '');
+    redirect('contactos.php');
 }
 
-$clientes = $pdo->query("SELECT * FROM clientes ORDER BY id DESC")->fetchAll();
+$contactos = $pdo->query("SELECT * FROM contactos ORDER BY id DESC")->fetchAll();
 
 include '../inc/header.php';
 ?>
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2">Clientes</h1>
-    <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#clienteModal" onclick="resetForm()">
-        Nuevo cliente
+    <h1 class="h2">Contactos</h1>
+    <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#contactoModal" onclick="resetForm()">
+        Nuevo contacto
     </button>
 </div>
 
@@ -51,33 +52,36 @@ include '../inc/header.php';
                 <th>Nombre</th>
                 <th>Contacto</th>
                 <th>Teléfono</th>
+                <th>Tipo</th>
                 <th class="text-end">Acciones</th>
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($clientes as $c): ?>
+            <?php foreach ($contactos as $c): ?>
             <tr>
                 <td><?php echo $c['id']; ?></td>
                 <td><span class="fw-bold"><?php echo htmlspecialchars($c['nombre']); ?></span></td>
                 <td><?php echo htmlspecialchars($c['contacto']); ?></td>
                 <td><?php echo htmlspecialchars($c['telefono']); ?></td>
+                <td><span class="badge bg-<?php echo $c['tipo'] === 'cliente' ? 'info' : 'warning'; ?>"><?php echo ucfirst(htmlspecialchars($c['tipo'])); ?></span></td>
                 <td class="text-end">
                     <div class="btn-group" role="group">
                         <button class="btn btn-sm btn-outline-primary" 
                                 data-bs-toggle="modal" 
-                                data-bs-target="#clienteModal"
+                                data-bs-target="#contactoModal"
                                 data-id="<?php echo $c['id']; ?>"
                                 data-nombre="<?php echo htmlspecialchars($c['nombre']); ?>"
                                 data-contacto="<?php echo htmlspecialchars($c['contacto']); ?>"
                                 data-telefono="<?php echo htmlspecialchars($c['telefono']); ?>"
-                                onclick="editCliente(this)"
+                                data-tipo="<?php echo htmlspecialchars($c['tipo']); ?>"
+                                onclick="editContacto(this)"
                                 title="Editar">
                             <i class="bi bi-pencil-square"></i>
                         </button>
                         <button class="btn btn-sm btn-outline-danger" 
                                 data-bs-toggle="modal" 
                                 data-bs-target="#deleteModal" 
-                                data-url="clientes.php?delete=<?php echo $c['id']; ?>"
+                                data-url="contactos.php?delete=<?php echo $c['id']; ?>"
                                 title="Eliminar">
                             <i class="bi bi-trash"></i>
                         </button>
@@ -89,12 +93,12 @@ include '../inc/header.php';
     </table>
 </div>
 
-<!-- Modal Cliente -->
-<div class="modal fade" id="clienteModal" tabindex="-1" aria-hidden="true">
+<!-- Modal Contacto -->
+<div class="modal fade" id="contactoModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog">
     <form method="POST" class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="modalTitle">Nuevo cliente</h5>
+        <h5 class="modal-title" id="modalTitle">Nuevo contacto</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -113,6 +117,13 @@ include '../inc/header.php';
             <label class="form-label">Teléfono</label>
             <input type="text" class="form-control" name="telefono" id="telefono">
         </div>
+        <div class="mb-3">
+            <label class="form-label">Tipo</label>
+            <select class="form-select" name="tipo" id="tipo" required>
+                <option value="cliente">Cliente</option>
+                <option value="proveedor">Proveedor</option>
+            </select>
+        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -124,21 +135,23 @@ include '../inc/header.php';
 
 <script>
 function resetForm() {
-    document.getElementById('modalTitle').innerText = 'Nuevo Cliente';
+    document.getElementById('modalTitle').innerText = 'Nuevo Contacto';
     document.getElementById('action').value = 'create';
     document.getElementById('id').value = '';
     document.getElementById('nombre').value = '';
     document.getElementById('contacto').value = '';
     document.getElementById('telefono').value = '';
+    document.getElementById('tipo').value = 'cliente';
 }
 
-function editCliente(btn) {
-    document.getElementById('modalTitle').innerText = 'Editar cliente';
+function editContacto(btn) {
+    document.getElementById('modalTitle').innerText = 'Editar contacto';
     document.getElementById('action').value = 'edit';
     document.getElementById('id').value = btn.getAttribute('data-id');
     document.getElementById('nombre').value = btn.getAttribute('data-nombre');
     document.getElementById('contacto').value = btn.getAttribute('data-contacto');
     document.getElementById('telefono').value = btn.getAttribute('data-telefono');
+    document.getElementById('tipo').value = btn.getAttribute('data-tipo');
 }
 </script>
 

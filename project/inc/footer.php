@@ -4,11 +4,10 @@
     <div class="container">
         <div class="d-flex justify-content-between align-items-center">
             <div>
-                <strong><i class="bi bi-shop me-2"></i>Mi Tienda</strong>
                 <span class="text-white-50 ms-2">Sistema de gestión</span>
             </div>
             <div class="text-white-50">
-                <small>&copy; 2025 Todos los derechos reservados</small>
+                <small><a href="https://github.com/perezjames/mi_tienda" target="_blank" class="text-white-50 text-decoration-none">GitHub</a></small>
             </div>
         </div>
     </div>

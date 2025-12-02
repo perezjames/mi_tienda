@@ -7,7 +7,7 @@ check_login();
 $IVA_PORCENTAJE = 0.19; // 19%
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $cliente_id = $_POST['cliente_id'];
+    $contacto_id = $_POST['contacto_id'];
     $items = json_decode($_POST['items'], true);
     
     if (!empty($items)) {
@@ -33,8 +33,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $total = $subtotal + $iva;
 
             // crear venta
-            $stmt = $pdo->prepare("INSERT INTO ventas (cliente_id, usuario_id, subtotal, iva, total) VALUES (?, ?, ?, ?, ?)");
-            $stmt->execute([$cliente_id, $_SESSION['user_id'], $subtotal, $iva, $total]);
+            $stmt = $pdo->prepare("INSERT INTO ventas (contacto_id, usuario_id, subtotal, iva, total) VALUES (?, ?, ?, ?, ?)");
+            $stmt->execute([$contacto_id, $_SESSION['user_id'], $subtotal, $iva, $total]);
             $venta_id = $pdo->lastInsertId();
 
             // crear items de venta y actualizar stock
@@ -61,9 +61,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-$clientes = $pdo->query("SELECT * FROM clientes ORDER BY nombre")->fetchAll();
+$contactos = $pdo->query("SELECT * FROM contactos WHERE tipo = 'cliente' ORDER BY nombre")->fetchAll();
 $productos = $pdo->query("SELECT * FROM productos WHERE stock > 0 ORDER BY nombre")->fetchAll();
-$ventas = $pdo->query("SELECT v.*, c.nombre as cliente, u.nombre as usuario FROM ventas v LEFT JOIN clientes c ON v.cliente_id = c.id LEFT JOIN users u ON v.usuario_id = u.id ORDER BY v.fecha DESC LIMIT 15")->fetchAll();
+$ventas = $pdo->query("SELECT v.*, c.nombre as contacto, u.nombre as usuario FROM ventas v LEFT JOIN contactos c ON v.contacto_id = c.id LEFT JOIN users u ON v.usuario_id = u.id ORDER BY v.fecha DESC LIMIT 15")->fetchAll();
 
 include '../inc/header.php';
 ?>
@@ -84,19 +84,19 @@ include '../inc/header.php';
 <?php endif; ?>
 
 <div class="row">
-    <!-- Mitad izquierda: Registro de venta -->
+    <!-- Registro de venta -->
     <div class="col-md-6">
         <div class="card rounded-3 mb-4">
             <div class="card-header bg-dark text-white">
-                <h5 class="mb-0"><i class="bi bi-cart-plus me-2"></i>Nueva Venta</h5>
+                <h5 class="mb-0">Nueva venta</h5>
             </div>
             <div class="card-body">
                 <form method="POST" id="ventaForm">
                     <div class="mb-3">
                         <label class="form-label fw-semibold">Cliente</label>
-                        <select class="form-select" name="cliente_id" required>
+                        <select class="form-select" name="contacto_id" required>
                             <option value="">Seleccione cliente...</option>
-                            <?php foreach ($clientes as $c): ?>
+                            <?php foreach ($contactos as $c): ?>
                             <option value="<?php echo $c['id']; ?>"><?php echo htmlspecialchars($c['nombre']); ?></option>
                             <?php endforeach; ?>
                         </select>
@@ -163,11 +163,11 @@ include '../inc/header.php';
         </div>
     </div>
 
-    <!-- Mitad derecha: Últimas ventas -->
+    <!-- Últimas ventas -->
     <div class="col-md-6">
         <div class="card rounded-3">
             <div class="card-header bg-dark text-white">
-                <h5 class="mb-0"><i class="bi bi-clock-history me-2"></i>Últimas Ventas</h5>
+                <h5 class="mb-0">Últimas Ventas</h5>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -176,9 +176,9 @@ include '../inc/header.php';
                             <tr>
                                 <th>ID</th>
                                 <th>Fecha</th>
-                                <th>Cliente</th>
+                                <th>Contacto</th>
                                 <th>Total</th>
-                                <th></th>
+                                <th>Fact.</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -186,7 +186,7 @@ include '../inc/header.php';
                             <tr>
                                 <td><?php echo $v['id']; ?></td>
                                 <td><small><?php echo date('d/m H:i', strtotime($v['fecha'])); ?></small></td>
-                                <td><small><?php echo htmlspecialchars(substr($v['cliente'] ?? 'General', 0, 15)); ?></small></td>
+                                <td><small><?php echo htmlspecialchars(substr($v['contacto'] ?? 'General', 0, 15)); ?></small></td>
                                 <td><strong class="text-success">$<?php echo number_format($v['total'], 2); ?></strong></td>
                                 <td>
                                     <a href="factura.php?id=<?php echo $v['id']; ?>" target="_blank" class="btn btn-sm btn-outline-dark" title="Ver Factura">
