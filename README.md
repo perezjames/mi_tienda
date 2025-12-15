@@ -1,5 +1,4 @@
 ## 📁 Estructura del proyecto
-```
 mi_tienda/
 ├─ project/
 │ ├─ assets/
@@ -30,4 +29,3 @@ mi_tienda/
 │ └─ sql/
 │   └─ schema.sql
 └─ README.md
-```
