@@ -7,7 +7,7 @@
                 <span class="text-white-50 ms-2">Sistema de gestión</span>
             </div>
             <div class="text-white-50">
-                <small><a href="https://github.com/perezjames/mi_tienda" target="_blank" class="text-white-50 text-decoration-none">GitHub</a></small>
+                <small><a href="https://github.com/perezjames/mi_tienda" target="_blank" class="text-white-50 text-decoration-none">https://github.com/perezjames/mi_tienda</a></small>
             </div>
         </div>
     </div>

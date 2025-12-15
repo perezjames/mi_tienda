@@ -15,7 +15,7 @@ $columnas = [];
 
 switch ($tipo_reporte) {
     case 'ventas':
-        $titulo = 'Reporte de Ventas';
+        $titulo = 'Reporte de ventas';
         $columnas = ['ID', 'Fecha', 'Contacto', 'Vendedor', 'Subtotal', 'IVA', 'Total'];
         $sql = "SELECT v.id, v.fecha, c.nombre as contacto, u.nombre as usuario, v.subtotal, v.iva, v.total 
                 FROM ventas v 
@@ -29,7 +29,7 @@ switch ($tipo_reporte) {
         break;
 
     case 'productos':
-        $titulo = 'Reporte de Productos';
+        $titulo = 'Reporte de productos';
         $columnas = ['ID', 'Nombre', 'Código', 'Categoría', 'Precio', 'Stock', 'Fecha Registro'];
         $sql = "SELECT p.id, p.nombre, p.codigo, c.nombre as categoria, p.precio, p.stock, p.created_at 
                 FROM productos p 
@@ -39,7 +39,7 @@ switch ($tipo_reporte) {
         break;
 
     case 'inventario':
-        $titulo = 'Reporte de Inventario (Stock)';
+        $titulo = 'Reporte de inventario (Stock)';
         $columnas = ['ID', 'Producto', 'Stock Actual', 'Precio Unit.', 'Valor Total', 'Estado'];
         $sql = "SELECT p.id, p.nombre, p.stock, p.precio, (p.stock * p.precio) as valor_total 
                 FROM productos p 
@@ -52,7 +52,7 @@ switch ($tipo_reporte) {
         break;
 
     case 'contactos':
-        $titulo = 'Reporte de Contactos';
+        $titulo = 'Reporte de contactos';
         $columnas = ['ID', 'Nombre', 'Contacto', 'Teléfono', 'Tipo', 'Total Compras', 'Fecha Registro'];
         $sql = "SELECT c.id, c.nombre, c.contacto, c.telefono, c.tipo,
                 COALESCE(SUM(v.total), 0) as total_compras, c.created_at 
@@ -64,14 +64,14 @@ switch ($tipo_reporte) {
         break;
 
     case 'usuarios':
-        $titulo = 'Reporte de Usuarios';
+        $titulo = 'Reporte de usuarios';
         $columnas = ['ID', 'Nombre', 'Correo', 'Rol', 'Estado', 'Fecha Registro'];
         $sql = "SELECT id, nombre, correo, rol, estado, created_at FROM users ORDER BY nombre";
         $datos = $pdo->query($sql)->fetchAll();
         break;
 
     case 'productos_vendidos':
-        $titulo = 'Productos Más Vendidos';
+        $titulo = 'Productos más vendidos';
         $columnas = ['Producto', 'Cantidad Total', 'Veces Vendido', 'Ingresos Generados'];
         $sql = "SELECT p.nombre, SUM(vi.cantidad) as total_cantidad, 
                 COUNT(DISTINCT vi.venta_id) as veces_vendido, 
@@ -105,32 +105,34 @@ if (isset($_GET['export']) && $_GET['export'] == 'csv') {
 include '../inc/header.php';
 ?>
 
-<h2 class="mb-4 no-print">Reportes</h2>
+<div class="d-flex mb-4 border-bottom">
+    <h2 class="mb-4 no-print"></h2>
 
-<!-- Selector de tipo de reporte -->
-<div class="row no-print mb-4">
-    <div class="col-12">
-        <div class="btn-group flex-wrap" role="group">
-            <a href="?tipo=ventas" class="btn btn-<?php echo $tipo_reporte == 'ventas' ? 'dark' : 'outline-dark'; ?>">
-                <i class="bi bi-cart-check me-1"></i>Ventas
-            </a>
-            <a href="?tipo=productos_vendidos" class="btn btn-<?php echo $tipo_reporte == 'productos_vendidos' ? 'dark' : 'outline-dark'; ?>">
-                <i class="bi bi-graph-up me-1"></i>Productos vendidos
-            </a>
-            <a href="?tipo=productos" class="btn btn-<?php echo $tipo_reporte == 'productos' ? 'dark' : 'outline-dark'; ?>">
-                <i class="bi bi-box me-1"></i>Productos
-            </a>
-            <a href="?tipo=inventario" class="btn btn-<?php echo $tipo_reporte == 'inventario' ? 'dark' : 'outline-dark'; ?>">
-                <i class="bi bi-boxes me-1"></i>Inventario
-            </a>
-            <a href="?tipo=contactos" class="btn btn-<?php echo $tipo_reporte == 'contactos' ? 'dark' : 'outline-dark'; ?>">
-                <i class="bi bi-people me-1"></i>Contactos
-            </a>
-            <?php if($_SESSION['rol'] == 'administrador'): ?>
-            <a href="?tipo=usuarios" class="btn btn-<?php echo $tipo_reporte == 'usuarios' ? 'dark' : 'outline-dark'; ?>">
-                <i class="bi bi-person-badge me-1"></i>Usuarios
-            </a>
-            <?php endif; ?>
+    <!-- Selector de tipo de reporte -->
+    <div class="row no-print mb-4">
+        <div class="col-12">
+            <div class="btn-group flex-wrap" role="group">
+                <a href="?tipo=ventas" class="btn btn-<?php echo $tipo_reporte == 'ventas' ? 'dark' : 'outline-dark'; ?>">
+                    Ventas
+                </a>
+                <a href="?tipo=productos_vendidos" class="btn btn-<?php echo $tipo_reporte == 'productos_vendidos' ? 'dark' : 'outline-dark'; ?>">
+                    Productos más vendidos
+                </a>
+                <a href="?tipo=productos" class="btn btn-<?php echo $tipo_reporte == 'productos' ? 'dark' : 'outline-dark'; ?>">
+                    Productos
+                </a>
+                <a href="?tipo=inventario" class="btn btn-<?php echo $tipo_reporte == 'inventario' ? 'dark' : 'outline-dark'; ?>">
+                    Inventario
+                </a>
+                <a href="?tipo=contactos" class="btn btn-<?php echo $tipo_reporte == 'contactos' ? 'dark' : 'outline-dark'; ?>">
+                    Contactos
+                </a>
+                <?php if($_SESSION['rol'] == 'administrador'): ?>
+                <a href="?tipo=usuarios" class="btn btn-<?php echo $tipo_reporte == 'usuarios' ? 'dark' : 'outline-dark'; ?>">
+                    Usuarios
+                </a>
+                <?php endif; ?>
+            </div>
         </div>
     </div>
 </div>

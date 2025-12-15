@@ -68,8 +68,6 @@ $ventas = $pdo->query("SELECT v.*, c.nombre as contacto, u.nombre as usuario FRO
 include '../inc/header.php';
 ?>
 
-<h2 class="mb-4">Registrar Venta</h2>
-
 <?php if(isset($error)): ?>
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
         <i class="bi bi-exclamation-triangle-fill me-2"></i><?php echo $error; ?>
@@ -119,7 +117,7 @@ include '../inc/header.php';
                                 <input type="number" class="form-control" id="prodQty" value="1" min="1">
                             </div>
                             <div class="col-2">
-                                <button type="button" class="btn btn-secondary w-100" onclick="addItem()"><i class="bi bi-plus"></i></button>
+                                <button type="button" class="btn btn-dark w-100" onclick="addItem()"><i class="bi bi-plus"></i></button>
                             </div>
                         </div>
                     </div>
@@ -155,9 +153,7 @@ include '../inc/header.php';
                     </div>
 
                     <input type="hidden" name="items" id="itemsInput">
-                    <button type="submit" class="btn btn-dark w-100">
-                        <i class="bi bi-check-circle me-2"></i>Registrar venta
-                    </button>
+                    <button type="submit" class="btn btn-dark">Registrar venta</button>
                 </form>
             </div>
         </div>
@@ -167,7 +163,7 @@ include '../inc/header.php';
     <div class="col-md-6">
         <div class="card rounded-3">
             <div class="card-header bg-dark text-white">
-                <h5 class="mb-0">Últimas Ventas</h5>
+                <h5 class="mb-0">Últimas ventas</h5>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -177,6 +173,7 @@ include '../inc/header.php';
                                 <th>ID</th>
                                 <th>Fecha</th>
                                 <th>Contacto</th>
+                                <th>Tipo</th>
                                 <th>Total</th>
                                 <th>Fact.</th>
                             </tr>
@@ -187,6 +184,7 @@ include '../inc/header.php';
                                 <td><?php echo $v['id']; ?></td>
                                 <td><small><?php echo date('d/m H:i', strtotime($v['fecha'])); ?></small></td>
                                 <td><small><?php echo htmlspecialchars(substr($v['contacto'] ?? 'General', 0, 15)); ?></small></td>
+                                <td><small></small></td>
                                 <td><strong class="text-success">$<?php echo number_format($v['total'], 2); ?></strong></td>
                                 <td>
                                     <a href="factura.php?id=<?php echo $v['id']; ?>" target="_blank" class="btn btn-sm btn-outline-dark" title="Ver Factura">

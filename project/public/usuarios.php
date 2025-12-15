@@ -45,8 +45,8 @@ $usuarios = $pdo->query("SELECT * FROM users ORDER BY id DESC")->fetchAll();
 include '../inc/header.php';
 ?>
 
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2">Usuarios</h1>
+<div class="d-flex mb-4 border-bottom">
+    <h2 class="h2"></h2>
     <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#usuarioModal" onclick="resetForm()">
         Nuevo usuario
     </button>

@@ -90,7 +90,7 @@ include '../inc/header.php';
     <!-- Historial de actividades -->    
     <div class="col-md-6 mb-4">
         <div class="card h-100 border">
-            <div class="card-header bg-dark text-white font-weight-bold">Historial de Actividad</div>
+            <div class="card-header bg-dark text-white font-weight-bold">Historial de actividad</div>
             <div class="card-body p-2">
                 <table class="table table-sm table-striped mb-0">
                     <thead>
@@ -126,7 +126,7 @@ include '../inc/header.php';
     <!-- Productos más vendidos -->
     <div class="col-md-6 mb-4">
         <div class="card h-100 border">
-            <div class="card-header bg-dark text-white font-weight-bold">Productos Más Vendidos</div>
+            <div class="card-header bg-dark text-white font-weight-bold">Productos más vendidos</div>
             <div class="card-body p-2">
                 <table class="table table-sm table-striped mb-0">
                     <thead>
@@ -160,7 +160,7 @@ include '../inc/header.php';
     <!-- Últimas ventas -->
     <div class="col-md-6 mb-4">
         <div class="card h-100 border">
-            <div class="card-header bg-dark text-white font-weight-bold">Últimas Ventas</div>
+            <div class="card-header bg-dark text-white font-weight-bold">Últimas ventas</div>
             <div class="card-body p-2">
                 <table class="table table-sm table-striped mb-0">
                     <thead>
@@ -195,7 +195,7 @@ include '../inc/header.php';
     <!-- Productos añadidos recientemente -->
     <div class="col-md-6 mb-4">
         <div class="card h-100 border">
-            <div class="card-header bg-dark text-white font-weight-bold">Productos Recientes</div>
+            <div class="card-header bg-dark text-white font-weight-bold">Productos recientes</div>
             <div class="card-body p-2">
                 <table class="table table-sm table-striped mb-0">
                     <thead>
