@@ -2,13 +2,11 @@
 ```
 mi_tienda/
 ├─ project/
-│ │
 │ ├─ assets/
 │ │ ├─ css/
 │ │ │ └─ style.css
 │ │ └─ js/
 │ │   └─ scripts.js
-│ │
 │ ├─ inc/
 │ │ ├─ auth.php
 │ │ ├─ db.php
@@ -17,7 +15,6 @@ mi_tienda/
 │ │ ├─ helpers.php
 │ │ ├─ modals.php
 │ │ └─ navbar.php
-│ │
 │ ├─ public/
 │ │ ├─ config_cuenta.php
 │ │ ├─ contactos.php
@@ -30,9 +27,7 @@ mi_tienda/
 │ │ ├─ reportes.php
 │ │ ├─ usuarios.php
 │ │ └─ ventas.php
-│ │
 │ └─ sql/
 │   └─ schema.sql
-│
 └─ README.md
 ```
